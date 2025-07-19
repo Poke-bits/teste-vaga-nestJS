@@ -1,13 +1,14 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
-import { ProductController } from './prisma/src/controllers/product';
-import { PrismaProductRepository } from './prisma/src/repositories/product/prisma-product.repository';
-import { productRoutes } from './prisma/src/routes/product';
-import { CreateProductUseCase } from './prisma/src/use-cases/product/create';
-import { DeleteProductUseCase } from './prisma/src/use-cases/product/delete';
-import { GetProductUseCase } from './prisma/src/use-cases/product/get';
-import { ListProductsUseCase } from './prisma/src/use-cases/product/list';
-import { UpdateProductUseCase } from './prisma/src/use-cases/product/update';
+import { ProductController } from '../../controllers/product';
+import { PrismaProductRepository } from '../../repositories/product/prisma-product.repository';
+import { productRoutes } from '../../routes/product';
+import { CreateProductUseCase } from '../../use-cases/product/create';
+import { DeleteProductUseCase } from '../../use-cases/product/delete';
+import { GetProductUseCase } from '../../use-cases/product/get';
+import { ListProductsUseCase } from '../../use-cases/product/list';
+import { UpdateProductUseCase } from '../../use-cases/product/update';
+
 
 
 async function bootstrap() {
@@ -34,7 +35,7 @@ async function bootstrap() {
   app.use('/api/products', productRoutes(productController));
 
   // Middleware global de erro
-  app.use((err, req, res, next) => {
+  app.use((err:any, req:any, res:any, next:any) => {
     console.error(err);
     res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
   });

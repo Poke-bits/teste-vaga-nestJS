@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run db:start && nest start",
-    "start:dev": "npm run db:start && npx prisma generate && nest start --watch",
+    "start:dev": "npm run db:start && npx prisma generate && ts-node -r tsconfig-paths/register src/infra/http/server.ts",
     "db:start": "docker-compose up -d",
     "db:stop": "docker-compose down",
     "db:restart": "npm run db:stop && npm run db:start",
@@ -30,10 +30,15 @@
   },
   "devDependencies": {
     "@nestjs/testing": "^11.1.5",
+    "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.15",
     "@types/uuid": "^10.0.0",
     "jest": "^30.0.4",
     "prisma": "^6.12.0",
-    "ts-jest": "^29.4.0"
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
   }
 }
