@@ -42,7 +42,6 @@ export class ProductController {
   @ApiBody({ type: CreateProductDtoDoc })
   @UseZodGuard('body', CreateProductSchema)
   async create(@Body() createProductDto: CreateProductDto) {
-    console.log(createProductDto, 'SEXOOOOOOOOOO');
     this.logger.log(
       `POST /products - Criando produto com SKU: ${createProductDto.sku}`
     );
@@ -82,6 +81,6 @@ export class ProductController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id') id: string) {
     this.logger.warn(`DELETE /products/${id} - Removendo produto`);
-    await this.deleteUseCase.execute(id);
+   return await this.deleteUseCase.execute(id);
   }
 }
