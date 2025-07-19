@@ -8,7 +8,6 @@ export class PrismaProductRepository implements ProductRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(data: Product): Promise<Product> {
-    this.prisma.product.findUnique({ where: { sku: data.sku } });
     return this.prisma.product.create({ data });
   }
 
@@ -26,11 +25,11 @@ export class PrismaProductRepository implements ProductRepository {
   }
 
   async findById(id: string): Promise<Product | null> {
-    return this.prisma.product.findUnique({ where: { id, deletedAt: null } });
+    return this.prisma.product.findFirst({ where: { id, deletedAt: null } });
   }
 
   async findBySku(sku: string): Promise<Product | null> {
-    return this.prisma.product.findUnique({ where: { sku, deletedAt: null } });
+    return this.prisma.product.findFirst({ where: { sku, deletedAt: null } });
   }
 
   async update(id: string, data: Partial<Product>): Promise<Product> {
