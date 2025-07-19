@@ -26,7 +26,7 @@ export class CreateProductUseCase {
     this.logger.debug(
       `SKU ${data.sku} disponível, criando entidade do produto`
     );
-    const productEntity = new ProductEntity(data.toObject());
+    const productEntity = new ProductEntity(data);
 
     const productToCreate = {
       name: productEntity.name,

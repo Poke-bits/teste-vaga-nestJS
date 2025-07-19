@@ -18,12 +18,13 @@ import { ListProductsUseCase } from '../use-cases/product/list';
 import { GetProductUseCase } from '../use-cases/product/get';
 import { UpdateProductUseCase } from '../use-cases/product/update';
 import { DeleteProductUseCase } from '../use-cases/product/delete';
-import { CreateProductDto } from '../dto/product/create';
-import { UpdateProductDto } from '../dto/product/update';
+import { CreateProductDto, CreateProductSchema } from '../dto/product/create';
 import { ApiBody } from '@nestjs/swagger';
-import { ZodValidationPipe } from 'nestjs-zod';
 import { CreateProductDtoDoc } from 'src/dto/doc/create';
 import { UpdateProductDtoDoc } from 'src/dto/doc/update';
+import { UpdateProductDto, UpdateProductSchema } from 'src/dto/product/update';
+import { UseZodGuard } from 'nestjs-zod';
+
 
 @Controller('products')
 export class ProductController {
@@ -34,14 +35,17 @@ export class ProductController {
     private readonly listUseCase: ListProductsUseCase,
     private readonly getUseCase: GetProductUseCase,
     private readonly updateUseCase: UpdateProductUseCase,
-    private readonly deleteUseCase: DeleteProductUseCase,
+    private readonly deleteUseCase: DeleteProductUseCase
   ) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe())
   @ApiBody({ type: CreateProductDtoDoc })
+  @UseZodGuard('body', CreateProductSchema)
   async create(@Body() createProductDto: CreateProductDto) {
-    this.logger.log(`POST /products - Criando produto com SKU: ${createProductDto.sku}`);
+    console.log(createProductDto, 'SEXOOOOOOOOOO');
+    this.logger.log(
+      `POST /products - Criando produto com SKU: ${createProductDto.sku}`
+    );
     const result = await this.createUseCase.execute(createProductDto);
     this.logger.debug(`Produto criado: ${JSON.stringify(result)}`);
     return result;
@@ -64,9 +68,12 @@ export class ProductController {
   }
 
   @Put(':id')
-  @UsePipes(new ZodValidationPipe())
   @ApiBody({ type: UpdateProductDtoDoc })
-  async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDtoDoc) {
+  @UseZodGuard('body', UpdateProductSchema)
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto
+  ) {
     this.logger.log(`PUT /products/${id} - Atualizando produto`);
     return this.updateUseCase.execute(id, updateProductDto);
   }

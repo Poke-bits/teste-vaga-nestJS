@@ -11,9 +11,6 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-"plugins": [
-  { "name": "nestjs-zod" },
-],
     "baseUrl": ".",
     "paths": {
       "src/*": ["src/*"]

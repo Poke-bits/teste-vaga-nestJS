@@ -6,7 +6,8 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { ZodValidationException } from 'nestjs-zod';
+import { Response } from 'express';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -15,38 +16,43 @@ export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
 
-    const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message: any = 'Internal server error';
 
-    const message =
-      exception instanceof HttpException
-        ? exception.getResponse()
-        : 'Internal server error';
-
-    const errorResponse = {
-      statusCode: status,
-      message,
-      path: request.url,
-      timestamp: new Date().toISOString(),
-    };
-
-    if (status >= 500) {
-      this.logger.error(
-        `Erro interno do servidor - ${request.method} ${request.url} - Status: ${status}`,
-        exception instanceof Error ? exception.stack : exception
-      );
-    } else if (status >= 400) {
-      this.logger.warn(
-        `Erro do cliente - ${request.method} ${request.url} - Status: ${status} - Message: ${JSON.stringify(message)}`
-      );
+    if (exception instanceof ZodValidationException) {
+      status = exception.getStatus();
+      message = exception.getZodError().issues.map((issue) => ({
+        path: issue.path.join('.'),
+        message: issue.message,
+      }));
+    } else if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      const exceptionResponse = exception.getResponse();
+      console.log(exceptionResponse, 'SEXOOOOOOOOOOOOOO');
+      if (typeof exceptionResponse === 'string') {
+        message = exceptionResponse;
+      } else if (
+        typeof exceptionResponse === 'object' &&
+        'message' in exceptionResponse
+      ) {
+        message = exceptionResponse['message'];
+      }
+    } else if (exception instanceof Error) {
+      message = exception.message;
     }
 
-    this.logger.debug(`Resposta de erro enviada: ${JSON.stringify(errorResponse)}`);
+    this.logger.warn(
+      `Erro do cliente - Status: ${status} - Message: ${JSON.stringify(
+        message
+      )}`
+    );
 
-    response.status(status).json(errorResponse);
+    response.status(status).json({
+      statusCode: status,
+      message,
+      timestamp: new Date().toISOString(),
+      path: ctx.getRequest().url,
+    });
   }
 }
