@@ -1,17 +1,20 @@
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Product {
-  id    String   @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  price Float
-  sku   String   @unique
+  id        String   @id @default(uuid())
+  name      String
+  price     Float
+  sku       String   @unique
   createdAt DateTime @default(now())
-  deletedAt DateTime? 
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 }
+

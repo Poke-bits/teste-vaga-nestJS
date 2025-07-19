@@ -1,22 +1,18 @@
 version: '3.8'
 
 services:
-  mongo:
-    image: mongo:6
-    container_name: nest_clean_mongo
+  db:
+    image: postgres:16
+    container_name: nest_clean_db
     restart: always
     ports:
-      - "27017:27017"
-    command: >
-      bash -c "
-        mongod --replSet rs0 --bind_ip_all &
-        sleep 5 &&
-        mongosh --eval 'rs.initiate({_id: \"rs0\", members: [{ _id: 0, host: \"localhost:27017\" }]})' ||
-        echo 'Replica set may already be initialized'
-        && tail -f /dev/null
-      "
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: productsdb
     volumes:
-      - mongo_data:/data/db
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  mongo_data:
+  pgdata:

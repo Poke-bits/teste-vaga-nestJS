@@ -20,6 +20,7 @@ export class CreateProductUseCase {
       price: productEntity.price,
       sku: productEntity.sku,
       createdAt: productEntity.createdAt,
+      updatedAt: productEntity.createdAt,
       deletedAt: productEntity.deletedAt ?? null,  
     };
     return this.productRepository.create(productToCreate);

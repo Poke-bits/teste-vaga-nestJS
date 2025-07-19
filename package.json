@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "npm run db:start && ts-node src/infra/http/server.ts",
-    "start:dev": "npm run db:start && npx prisma generate && ts-node src/infra/http/server.ts",
-    "db:start": "docker-compose up -d",
-    "db:stop": "docker-compose down",
-    "db:restart": "npm run db:stop && npm run db:start",
-    "prisma:generate": "prisma generate"
-  },
+"scripts": {
+  "start": "npm run db:start && npx prisma migrate deploy && ts-node src/infra/http/server.ts",
+  "start:dev": "npm run db:start && npx prisma migrate dev --name init && npx prisma generate && ts-node src/infra/http/server.ts",
+  "db:start": "docker-compose up -d",
+  "db:stop": "docker-compose down",
+  "db:restart": "npm run db:stop && npm run db:start",
+  "prisma:generate": "prisma generate"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

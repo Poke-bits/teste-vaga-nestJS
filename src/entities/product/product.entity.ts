@@ -4,6 +4,7 @@ export class ProductEntity {
   price: number;
   sku: string;
   createdAt: Date;
+  updatedAt?: Date;
   deletedAt?: Date | null;
 
   constructor(props: {
@@ -12,6 +13,7 @@ export class ProductEntity {
     sku: string;
     id?: string;
     createdAt?: Date;
+    updatedAt?: Date;
     deletedAt?: Date | null;
   }) {
     this.name = props.name;
@@ -19,6 +21,7 @@ export class ProductEntity {
     this.sku = props.sku;
     this.id = props.id;
     this.createdAt = props.createdAt ?? new Date();
+    this.updatedAt = props.updatedAt ?? this.createdAt;
     this.deletedAt = props.deletedAt ?? null;
   }
 }
