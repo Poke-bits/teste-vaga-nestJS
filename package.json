@@ -2,15 +2,18 @@
   "name": "teste-vaga-nest",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-"scripts": {
-  "start": "npm run db:start && npx prisma migrate dev --name init && npx prisma generate && ts-node src/infra/http/server.ts",
-  "build": "tsc",
-  "db:start": "docker-compose up -d",
-  "db:stop": "docker-compose down",
-  "db:restart": "npm run db:stop && npm run db:start",
-  "prisma:generate": "prisma generate"
-},
+  "main": "server.ts",
+  "scripts": {
+    "start": "npm run db:start && npx prisma migrate dev --name init && npx prisma generate && ts-node src/infra/http/server.ts",
+    "build": "tsc",
+    "db:start": "docker-compose up -d",
+    "db:stop": "docker-compose down",
+    "db:restart": "npm run db:stop && npm run db:start",
+    "prisma:generate": "prisma generate",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

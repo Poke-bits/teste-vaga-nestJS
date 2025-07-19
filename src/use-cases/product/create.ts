@@ -1,12 +1,16 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, Inject } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { CreateProductDto } from '../../dto/product/create';
 import { ProductEntity } from '../../entities/product/product.entity';
 import { ProductRepository } from '../../repositories/product/product.repository';
+import { PRODUCT_REPOSITORY } from '../../constants/token';
 
 @Injectable()
 export class CreateProductUseCase {
-  constructor(private readonly productRepository: ProductRepository) {}
+  
+  constructor(
+   @Inject(PRODUCT_REPOSITORY)
+    private readonly productRepository: ProductRepository) {}
 
   async execute(data: CreateProductDto): Promise<Product> {
     const existing = await this.productRepository.findBySku(data.sku);

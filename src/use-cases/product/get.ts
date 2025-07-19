@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProductRepository } from '../../repositories/product/product.repository';
-import { firstMissingAlphabetLetter } from '../../utils/alphabet';
 import { ProductOutputGetDto } from '../../../src/dto/product/get';
 import { toProductResponse } from '../../../src/mappers/Product';
 
