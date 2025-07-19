@@ -5,6 +5,7 @@ import { GetProductUseCase } from 'src/use-cases/product/get';
 import { ProductOutputGetDto } from 'src/dto/product/get';
 import { Product } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
+import { PRODUCT_REPOSITORY } from 'src/constants/token';
 
 const mockProduct: Product = {
   id: uuidv4(),
@@ -25,7 +26,7 @@ describe('GetProductUseCase', () => {
       providers: [
         GetProductUseCase,
         {
-          provide: ProductRepository,
+          provide: PRODUCT_REPOSITORY,
           useValue: {
             findById: jest.fn(),
           },
@@ -34,7 +35,7 @@ describe('GetProductUseCase', () => {
     }).compile();
 
     useCase = module.get<GetProductUseCase>(GetProductUseCase);
-    productRepository = module.get(ProductRepository);
+    productRepository = module.get(PRODUCT_REPOSITORY);
   });
 
   it('deve retornar o produto quando encontrado (caminho feliz)', async () => {

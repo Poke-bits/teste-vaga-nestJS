@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Product } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
-
 import { CreateProductDto } from 'src/dto/product/create';
 import { ProductRepository } from 'src/repositories/product/product.repository';
 import { CreateProductUseCase } from 'src/use-cases/product/create';

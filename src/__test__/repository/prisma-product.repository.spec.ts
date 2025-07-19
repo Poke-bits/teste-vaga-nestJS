@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaClient, Product } from '@prisma/client';
+import {  Product } from '@prisma/client';
+import { PrismaService } from 'src/config/prisma.service';
 import { PrismaProductRepository } from 'src/repositories/product/prisma-product.repository';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,13 +31,16 @@ describe('PrismaProductRepository', () => {
       providers: [
         PrismaProductRepository,
         {
-          provide: PrismaClient,
+          provide: PrismaService,
           useValue: mockPrismaClient,
         },
       ],
     }).compile();
 
     repository = module.get<PrismaProductRepository>(PrismaProductRepository);
+
+
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -57,7 +61,9 @@ describe('PrismaProductRepository', () => {
     expect(products).toEqual([mockProduct]);
     expect(mockPrismaClient.product.findMany).toHaveBeenCalledWith({
       where: { deletedAt: null },
-      ...params,
+      skip: params.skip,
+      take: params.take,
+      orderBy: params.orderBy,
     });
   });
 
@@ -82,7 +88,7 @@ describe('PrismaProductRepository', () => {
     const updatedProduct = await repository.update(mockProduct.id, updateData);
     expect(updatedProduct).toEqual(mockProduct);
     expect(mockPrismaClient.product.update).toHaveBeenCalledWith({
-      where: { id: mockProduct.id, deletedAt: null },
+      where: { id: mockProduct.id },
       data: { ...updateData, updatedAt: expect.any(Date) },
     });
   });

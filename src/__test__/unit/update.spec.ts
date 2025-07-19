@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { UpdateProductUseCase } from 'src/use-cases/product/update';
 import { ProductRepository } from 'src/repositories/product/product.repository';
 import { UpdateProductDto } from 'src/dto/product/update';
+import { PRODUCT_REPOSITORY } from 'src/constants/token';
 
 const mockProduct: Product = {
   id: uuidv4(),
@@ -25,7 +26,7 @@ describe('UpdateProductUseCase', () => {
       providers: [
         UpdateProductUseCase,
         {
-          provide: ProductRepository,
+          provide: PRODUCT_REPOSITORY,
           useValue: {
             findById: jest.fn(),
             findBySku: jest.fn(),
@@ -36,7 +37,7 @@ describe('UpdateProductUseCase', () => {
     }).compile();
 
     useCase = module.get(UpdateProductUseCase);
-    productRepository = module.get(ProductRepository);
+    productRepository = module.get(PRODUCT_REPOSITORY);
   });
 
   it('deve atualizar o produto com sucesso (caminho feliz)', async () => {

@@ -4,6 +4,7 @@ import { Product } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductRepository } from 'src/repositories/product/product.repository';
 import { DeleteProductUseCase } from 'src/use-cases/product/delete';
+import { PRODUCT_REPOSITORY } from 'src/constants/token';
 
 const mockProduct: Product = {
   id: uuidv4(),
@@ -17,22 +18,24 @@ const mockProduct: Product = {
 
 describe('DeleteProductUseCase', () => {
   let useCase: DeleteProductUseCase;
-  let mockRepo: jest.Mocked<ProductRepository>;
+  let productRepository: jest.Mocked<ProductRepository>;
 
   beforeEach(async () => {
-    mockRepo = {
-      findById: jest.fn(),
-      softDelete: jest.fn(),
-    } as unknown as jest.Mocked<ProductRepository>;
-
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DeleteProductUseCase,
-        { provide: ProductRepository, useValue: mockRepo },
+        {
+          provide: PRODUCT_REPOSITORY,
+          useValue: {
+            findById: jest.fn(),
+            softDelete: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     useCase = module.get<DeleteProductUseCase>(DeleteProductUseCase);
+    productRepository = module.get(PRODUCT_REPOSITORY);
   });
 
   it('should be defined', () => {
@@ -40,19 +43,20 @@ describe('DeleteProductUseCase', () => {
   });
 
   it('should soft delete a product when it exists', async () => {
-    mockRepo.findById.mockResolvedValueOnce(mockProduct);
+    productRepository.findById.mockResolvedValueOnce(mockProduct);
 
     await useCase.execute(mockProduct.id);
 
-    expect(mockRepo.findById).toHaveBeenCalledWith(mockProduct.id);
-    expect(mockRepo.softDelete).toHaveBeenCalledWith(mockProduct.id);
+    expect(productRepository.findById).toHaveBeenCalledWith(mockProduct.id);
+    expect(productRepository.softDelete).toHaveBeenCalledWith(mockProduct.id);
   });
 
   it('should throw NotFoundException when product does not exist', async () => {
-    mockRepo.findById.mockResolvedValueOnce(null);
+    productRepository.findById.mockResolvedValueOnce(null);
 
     await expect(useCase.execute(mockProduct.id)).rejects.toThrow(NotFoundException);
-    expect(mockRepo.findById).toHaveBeenCalledWith(mockProduct.id);
-    expect(mockRepo.softDelete).not.toHaveBeenCalled();
+
+    expect(productRepository.findById).toHaveBeenCalledWith(mockProduct.id);
+    expect(productRepository.softDelete).not.toHaveBeenCalled();
   });
 });

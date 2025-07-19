@@ -29,3 +29,5 @@ Thumbs.db
 
 # VSCode settings (opcional)
 .vscode/
+
+coverage/

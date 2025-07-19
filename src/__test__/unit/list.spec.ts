@@ -3,6 +3,7 @@ import { ProductRepository } from 'src/repositories/product/product.repository';
 import { ListProductsUseCase } from 'src/use-cases/product/list';
 import { ProductOutputGetDto } from 'src/dto/product/get';
 import { Product } from '@prisma/client';
+import { PRODUCT_REPOSITORY } from 'src/constants/token';
 
 const mockProducts: Product[] = [
   {
@@ -34,7 +35,7 @@ describe('ListProductsUseCase', () => {
       providers: [
         ListProductsUseCase,
         {
-          provide: ProductRepository,
+          provide: PRODUCT_REPOSITORY,
           useValue: {
             findAll: jest.fn(),
           },
@@ -43,7 +44,7 @@ describe('ListProductsUseCase', () => {
     }).compile();
 
     useCase = module.get<ListProductsUseCase>(ListProductsUseCase);
-    productRepository = module.get(ProductRepository);
+    productRepository = module.get(PRODUCT_REPOSITORY);
   });
 
   it('deve retornar uma lista de produtos (caminho feliz)', async () => {
