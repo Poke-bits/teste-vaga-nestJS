@@ -15,5 +15,4 @@ export const CreateProductSchema = z.object({
     .regex(/^[A-Z0-9\-]+$/),
 });
 
-// Cria DTO compatível com Swagger + NestJS
 export class CreateProductDto extends createZodDto(CreateProductSchema) {}
