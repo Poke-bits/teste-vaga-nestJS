@@ -34,7 +34,10 @@ export class PrismaProductRepository implements ProductRepository {
   }
 
   async update(id: string, data: Partial<Product>): Promise<Product> {
-    return this.prisma.product.update({ where: { id, deletedAt: null }, data });
+    return this.prisma.product.update({
+      where: { id, deletedAt: null },
+      data: { ...data, updatedAt: new Date() },
+    });
   }
 
   async softDelete(id: string): Promise<void> {
