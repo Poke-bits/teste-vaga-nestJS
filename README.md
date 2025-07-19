@@ -245,7 +245,7 @@ Os logs nativos do NestJS fornecem:
 
 A API possui documentação interativa gerada automaticamente com **Swagger/OpenAPI**:
 
-- **URL:** `http://localhost:3000/api`
+- **URL:** `http://localhost:3000/api-docs`
 - **Recursos:** Todos os endpoints documentados com exemplos
 - **Testável:** Interface para testar diretamente os endpoints
 - **Schemas:** Definições completas dos modelos de dados
