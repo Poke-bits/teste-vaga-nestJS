@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run db:start && nest start",
-    "start:dev": "npm run db:start && npx prisma generate && ts-node -r tsconfig-paths/register src/infra/http/server.ts",
+    "start": "npm run db:start && ts-node src/infra/http/server.ts",
+    "start:dev": "npm run db:start && npx prisma generate && ts-node src/infra/http/server.ts",
     "db:start": "docker-compose up -d",
     "db:stop": "docker-compose down",
     "db:restart": "npm run db:stop && npm run db:start",
