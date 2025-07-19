@@ -86,7 +86,7 @@ npm run start
 
 **✅ Pronto! A API estará disponível em:** `http://localhost:3000`
 
-**📚 Documentação Swagger disponível em:** `http://localhost:3000/api`
+**📚 Documentação Swagger disponível em:** `http://localhost:3000/api-docs`
 
 ---
 
