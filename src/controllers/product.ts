@@ -1,4 +1,18 @@
-import { Controller, Post, Get, Put, Delete, Param, Query, Body, HttpCode, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Put,
+  Delete,
+  Param,
+  Query,
+  Body,
+  HttpCode,
+  HttpStatus,
+  UsePipes,
+  ValidationPipe,
+  Logger,
+} from '@nestjs/common';
 import { CreateProductUseCase } from '../use-cases/product/create';
 import { ListProductsUseCase } from '../use-cases/product/list';
 import { GetProductUseCase } from '../use-cases/product/get';
@@ -9,6 +23,8 @@ import { UpdateProductDto } from '../dto/product/update';
 
 @Controller('products')
 export class ProductController {
+  private readonly logger = new Logger(ProductController.name);
+
   constructor(
     private readonly createUseCase: CreateProductUseCase,
     private readonly listUseCase: ListProductsUseCase,
@@ -18,34 +34,41 @@ export class ProductController {
   ) {}
 
   @Post()
+  @UsePipes(new ValidationPipe({ whitelist: true }))
   async create(@Body() createProductDto: CreateProductDto) {
-    return this.createUseCase.execute(createProductDto);
+    this.logger.log(`POST /products - Criando produto com SKU: ${createProductDto.sku}`);
+    const result = await this.createUseCase.execute(createProductDto);
+    this.logger.debug(`Produto criado: ${JSON.stringify(result)}`);
+    return result;
   }
 
   @Get()
-  async list(
-    @Query('page') page = '1',
-    @Query('pageSize') pageSize = '10',
-  ) {
+  async list(@Query('page') page = '1', @Query('pageSize') pageSize = '10') {
+    this.logger.log(`GET /products - Página: ${page}, PageSize: ${pageSize}`);
     const pageNumber = Number(page) || 1;
     const pageSizeNumber = Number(pageSize) || 10;
-
-    return this.listUseCase.execute(pageNumber, pageSizeNumber);
+    const result = await this.listUseCase.execute(pageNumber, pageSizeNumber);
+    this.logger.debug(`Produtos retornados: ${result.length}`);
+    return result;
   }
 
   @Get(':id')
   async get(@Param('id') id: string) {
+    this.logger.log(`GET /products/${id} - Buscando produto`);
     return this.getUseCase.execute(id);
   }
 
   @Put(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true }))
   async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+    this.logger.log(`PUT /products/${id} - Atualizando produto`);
     return this.updateUseCase.execute(id, updateProductDto);
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT) 
+  @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id') id: string) {
+    this.logger.warn(`DELETE /products/${id} - Removendo produto`);
     await this.deleteUseCase.execute(id);
   }
 }
