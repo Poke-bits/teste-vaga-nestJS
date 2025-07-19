@@ -16,7 +16,7 @@
 
 ## 📖 Sobre o Projeto
 
-Esta API RESTful foi desenvolvida seguindo os princípios de **Clean Architecture**, proporcionando uma solução escalável e maintível para o gerenciamento de produtos. Com foco em performance, qualidade de código e boas práticas, utiliza as tecnologias mais modernas do ecossistema Node.js.
+Esta API RESTful foi desenvolvida seguindo os princípios da **Clean Architecture**, proporcionando uma solução escalável e maintível para o gerenciamento de produtos. Com foco em performance, qualidade de código e boas práticas, utiliza as tecnologias mais modernas do ecossistema Node.js.
 
 ### ✨ Principais Funcionalidades
 
@@ -30,7 +30,7 @@ Esta API RESTful foi desenvolvida seguindo os princípios de **Clean Architectur
 🔤 **Campo Especial** - Cálculo automático de missingLetter  
 📚 **Documentação API** - Swagger/OpenAPI integrado para documentação interativa  
 🧪 **Testes Completos** - Jest com cobertura de testes abrangente  
-🌱 **Seeds de Dados** - População automática do banco com dados de exemplo  
+🌱 **Seeds de Dados** - Povoamento automático do banco com dados de exemplo  
 📊 **Logs Detalhados** - Sistema de logging robusto para monitoramento e debugging  
 
 ## 🛠️ Stack Tecnológica
@@ -279,6 +279,12 @@ Content-Type: application/json
 GET /products?page=1&pageSize=10
 ```
 
+### 📋 Listar Produtos 
+Paginação padrão em 1 página de 10 resultados
+```http
+GET /products
+```
+
 ### 🔍 Buscar Produto por ID
 ```http
 GET /products/{id}
@@ -330,7 +336,6 @@ DELETE /products/{id}
 | Comando | Função |
 |---------|---------|
 | `npm run start` | 🚀 Inicia o projeto completo |
-| `npm run start:dev` | 🔄 Inicia em modo desenvolvimento com logs |
 | `npm run build` | 🔨 Compila TypeScript |
 | `npm run test` | 🧪 Executa testes unitários |
 | `npm run test:coverage` | 📊 Executa testes com relatório de cobertura |
@@ -338,7 +343,7 @@ DELETE /products/{id}
 | `npm run db:start` | 🐳 Inicia PostgreSQL |
 | `npm run db:stop` | 🛑 Para PostgreSQL |
 | `npm run db:restart` | 🔄 Reinicia PostgreSQL |
-| `npm run db:seed` | 🌱 Popula banco com dados de exemplo |
+| `npm run db:seed` | 🌱 Povoa banco com dados de exemplo |
 | `npm run prisma:generate` | 🎯 Gera cliente Prisma |
 
 ## 📁 Estrutura do Projeto
@@ -395,10 +400,10 @@ npm run test:watch
 
 ## 🌱 Seeds de Dados
 
-O projeto inclui um sistema de seeds para popular o banco com dados de exemplo:
+O projeto inclui um sistema de seeds para povoar o banco com dados de exemplo:
 
 ```bash
-# Popular banco com dados de exemplo
+# Povoar banco com dados de exemplo
 npm run db:seed
 ```
 
