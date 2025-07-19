@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createZodDto } from 'nestjs-zod';
 
 export const UpdateProductSchema = z.object({
   name: z
@@ -21,4 +22,4 @@ export const UpdateProductSchema = z.object({
     .optional(),
 });
 
-export type UpdateProductDto = z.infer<typeof UpdateProductSchema>;
+export class UpdateProductDto extends createZodDto(UpdateProductSchema) {}

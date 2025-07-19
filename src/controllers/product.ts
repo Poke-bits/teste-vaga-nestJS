@@ -20,6 +20,10 @@ import { UpdateProductUseCase } from '../use-cases/product/update';
 import { DeleteProductUseCase } from '../use-cases/product/delete';
 import { CreateProductDto } from '../dto/product/create';
 import { UpdateProductDto } from '../dto/product/update';
+import { ApiBody } from '@nestjs/swagger';
+import { ZodValidationPipe } from 'nestjs-zod';
+import { CreateProductDtoDoc } from 'src/dto/doc/create';
+import { UpdateProductDtoDoc } from 'src/dto/doc/update';
 
 @Controller('products')
 export class ProductController {
@@ -34,7 +38,8 @@ export class ProductController {
   ) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
+  @UsePipes(new ZodValidationPipe())
+  @ApiBody({ type: CreateProductDtoDoc })
   async create(@Body() createProductDto: CreateProductDto) {
     this.logger.log(`POST /products - Criando produto com SKU: ${createProductDto.sku}`);
     const result = await this.createUseCase.execute(createProductDto);
@@ -59,8 +64,9 @@ export class ProductController {
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  @UsePipes(new ZodValidationPipe())
+  @ApiBody({ type: UpdateProductDtoDoc })
+  async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDtoDoc) {
     this.logger.log(`PUT /products/${id} - Atualizando produto`);
     return this.updateUseCase.execute(id, updateProductDto);
   }
