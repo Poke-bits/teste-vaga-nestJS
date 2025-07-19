@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const CreateProductSchema = z.object({
   name: z
     .string()
-    .min(1, 'Name is required')
+    .min(1, 'Name must have at least 1 character')
     .max(100, 'Name must be at most 100 characters long')
     .regex(/^[a-zA-Z0-9\s\-_'"]+$/, 'Name contains invalid characters'),
 
