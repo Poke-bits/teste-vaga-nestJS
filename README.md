@@ -419,10 +419,6 @@ npm run db:seed
 - ✅ **Logs:** Sistema de logging nativo do NestJS
 - ✅ **Observabilidade:** Monitoramento e debugging
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
 ---
 
 ## 👨‍💻 Autor
