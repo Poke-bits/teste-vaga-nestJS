@@ -1,5 +1,4 @@
 import { Product } from '@prisma/client';
-
 export abstract class ProductRepository {
   abstract create(data: Omit<Product, 'id'>): Promise<Product>;
   abstract findAll(params: {

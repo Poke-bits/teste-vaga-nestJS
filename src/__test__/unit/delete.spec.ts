@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
-
 import { ProductRepository } from 'src/repositories/product/product.repository';
 import { DeleteProductUseCase } from 'src/use-cases/product/delete';
 

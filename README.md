@@ -6,71 +6,61 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-> **Uma API RESTful robusta para gerenciamento de produtos, construída com as melhores práticas de desenvolvimento**
+**Uma API RESTful robusta para gerenciamento de produtos, construída com as melhores práticas de desenvolvimento**
 
-## 📖 Índice
-
-- [🌟 Sobre o Projeto](#-sobre-o-projeto)
-- [✨ Funcionalidades](#-funcionalidades)
-- [🛠️ Tecnologias](#️-tecnologias-utilizadas)
-- [🚀 Instalação](#-instalação)
-- [🧪 Como Testar](#-testando-com-insomnia--postman)
-- [💼 Regras de Negócio](#-regras-de-negócio)
-- [🏗️ Arquitetura](#️-estrutura-do-projeto)
+[📖 Documentação](#-sobre-o-projeto) • [🚀 Instalação](#-instalação) • [🧪 Como Testar](#-como-testar) • [📁 Estrutura](#-estrutura-do-projeto)
 
 ---
 
-## 🌟 Sobre o Projeto
+## 📖 Sobre o Projeto
 
-Esta API foi desenvolvida seguindo os princípios de **Clean Architecture**, proporcionando uma solução escalável e maintível para o gerenciamento de produtos. Com foco em performance e qualidade de código, utiliza as tecnologias mais modernas do ecossistema Node.js.
+Esta API RESTful foi desenvolvida seguindo os princípios de **Clean Architecture**, proporcionando uma solução escalável e maintível para o gerenciamento de produtos. Com foco em performance, qualidade de código e boas práticas, utiliza as tecnologias mais modernas do ecossistema Node.js.
 
-## ✨ Funcionalidades
+### ✨ Principais Funcionalidades
 
-- 🎯 **CRUD Completo** - Criar, listar, buscar, atualizar e deletar produtos
-- 🛡️ **Validação Robusta** - Validação de dados com Zod e middleware personalizado
-- 🗄️ **Banco de Dados** - PostgreSQL com Prisma ORM para queries otimizadas
-- 🐳 **Containerização** - Docker Compose para ambiente de desenvolvimento
-- 🏗️ **Arquitetura Limpa** - Clean Architecture para máxima escalabilidade
-- 🔄 **Soft Delete** - Exclusão lógica com campo deletedAt
-- 📄 **Paginação** - Listagem paginada para melhor performance
-- 🔤 **Campo Especial** - Cálculo automático de missingLetter
+🎯 **CRUD Completo** - Criar, listar, buscar, atualizar e deletar produtos  
+🛡️ **Validação Robusta** - Validação de dados com Zod e middleware personalizado  
+🗄️ **Banco de Dados** - PostgreSQL com Prisma ORM para queries otimizadas  
+🐳 **Containerização** - Docker Compose para ambiente de desenvolvimento  
+🏗️ **Arquitetura Limpa** - Clean Architecture para máxima escalabilidade  
+🔄 **Soft Delete** - Exclusão lógica com campo deletedAt  
+📄 **Paginação** - Listagem paginada para melhor performance  
+🔤 **Campo Especial** - Cálculo automático de missingLetter  
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Stack Tecnológica
 
-| Tecnologia | Uso |
-|------------|-----|
-| **[NestJS](https://nestjs.com/)** | Framework Node.js progressivo |
-| **[Prisma](https://www.prisma.io/)** | ORM moderno para TypeScript |
-| **[PostgreSQL](https://www.postgresql.org/)** | Banco de dados relacional |
+| Tecnologia | Descrição |
+|------------|-----------|
+| **[NestJS](https://nestjs.com/)** | Framework Node.js progressivo e robusto |
+| **[Prisma](https://www.prisma.io/)** | ORM moderno e type-safe para TypeScript |
+| **[PostgreSQL](https://www.postgresql.org/)** | Banco de dados relacional confiável |
 | **[Zod](https://zod.dev/)** | Validação de schema TypeScript-first |
-| **[Docker](https://www.docker.com/)** | Containerização |
-| **[TypeScript](https://www.typescriptlang.org/)** | Superset tipado do JavaScript |
+| **[Docker](https://www.docker.com/)** | Containerização para desenvolvimento |
+| **[TypeScript](https://www.typescriptlang.org/)** | JavaScript tipado |
 
 ## 📋 Pré-requisitos
 
-Antes de começar, certifique-se de ter instalado:
+Certifique-se de ter as seguintes ferramentas instaladas:
 
 - **Node.js** 18.x ou superior
 - **Docker** & **Docker Compose**
 - **npm** ou **yarn**
+- **Git**
 
 ## 🚀 Instalação
 
 ### 1️⃣ Clone o repositório
-
 ```bash
 git clone https://github.com/Poke-bits/teste-vaga-nestJS.git
 cd teste-vaga-nestJS
 ```
 
 ### 2️⃣ Instale as dependências
-
 ```bash
 npm install
 ```
 
 ### 3️⃣ Configure as variáveis de ambiente
-
 Crie um arquivo `.env` na raiz do projeto:
 
 ```env
@@ -79,29 +69,23 @@ PORT=3000
 ```
 
 ### 4️⃣ Execute o projeto
-
 ```bash
 npm run start
 ```
 
-**Este comando irá:**
-- 🐳 Inicializar o container PostgreSQL
-- 🔄 Executar as migrations do banco
-- 🎯 Gerar o cliente Prisma
-- 🚀 Iniciar o servidor de desenvolvimento
+> **O que acontece:** 🐳 Inicializa o PostgreSQL → 🔄 Executa migrations → 🎯 Gera cliente Prisma → 🚀 Inicia servidor
+
+**✅ Pronto! A API estará disponível em:** `http://localhost:3000`
 
 ---
 
-## 🧪 Testando com Insomnia / Postman
+## 🧪 Como Testar
 
 ### 📝 Criar Produto
-
 ```http
-POST http://localhost:3000/api/products
+POST /products
 Content-Type: application/json
-```
 
-```json
 {
   "name": "Cadeira Gamer RGB",
   "price": 1299.99,
@@ -110,25 +94,20 @@ Content-Type: application/json
 ```
 
 ### 📋 Listar Produtos (com paginação)
-
 ```http
-GET http://localhost:3000/api/products?page=1&pageSize=10
+GET /products?page=1&pageSize=10
 ```
 
-### 🔍 Obter Produto por ID
-
+### 🔍 Buscar Produto por ID
 ```http
-GET http://localhost:3000/api/products/:id
+GET /products/{id}
 ```
 
 ### ✏️ Atualizar Produto
-
 ```http
-PUT http://localhost:3000/api/products/:id
+PUT /products/{id}
 Content-Type: application/json
-```
 
-```json
 {
   "name": "Cadeira Gamer RGB Pro",
   "price": 1499.99,
@@ -137,105 +116,73 @@ Content-Type: application/json
 ```
 
 ### 🗑️ Deletar Produto
-
 ```http
-DELETE http://localhost:3000/api/products/:id
+DELETE /products/{id}
 ```
+
+**Resposta de sucesso:** Status `200` com mensagem de confirmação
 
 ---
 
 ## 💼 Regras de Negócio
 
-| Regra | Descrição |
-|-------|-----------|
+| Campo/Regra | Descrição |
+|-------------|-----------|
 | 🔤 **missingLetter** | Retorna a primeira letra (a-z) ausente no nome do produto, ou "_" se todas estiverem presentes |
 | 🏷️ **SKU único** | Cada produto deve ter um SKU único e obrigatório |
 | ✅ **Validação** | Todas as entradas são validadas com Zod |
 | 🗑️ **Soft Delete** | Exclusão lógica usando o campo `deletedAt` |
 
----
+## ⚠️ Códigos de Status HTTP
+
+| Status | Erro | Descrição |
+|--------|------|-----------|
+| `200` | ✅ Success | Operação realizada com sucesso |
+| `201` | ✅ Created | Produto criado com sucesso |
+| `400` | ❌ Bad Request | Dados de entrada inválidos |
+| `404` | ❌ Not Found | Produto não encontrado |
+| `409` | ❌ Conflict | SKU já existe no sistema |
+| `500` | ❌ Server Error | Erro interno do servidor |
 
 ## 📜 Scripts Disponíveis
 
-| Comando | Descrição |
-|---------|-----------|
-| `npm run start` | Inicia o projeto completo (Docker + Migrations + Servidor) |
-| `npm run build` | Compila o TypeScript para JavaScript |
-| `npm run db:start` | Inicia apenas o container do PostgreSQL |
-| `npm run db:stop` | Para o container do PostgreSQL |
-| `npm run db:restart` | Reinicia o container do PostgreSQL |
-| `npm run prisma:generate` | Gera o cliente Prisma |
+| Comando | Função |
+|---------|---------|
+| `npm run start` | 🚀 Inicia o projeto completo |
+| `npm run build` | 🔨 Compila TypeScript |
+| `npm run db:start` | 🐳 Inicia PostgreSQL |
+| `npm run db:stop` | 🛑 Para PostgreSQL |
+| `npm run db:restart` | 🔄 Reinicia PostgreSQL |
+| `npm run prisma:generate` | 🎯 Gera cliente Prisma |
 
----
-
-## 🏗️ Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
 ```
 src/
-├── 📁 config/           # Configurações (Prisma, etc.)
-│   └── prisma.service.ts
-├── 📁 controllers/      # Controladores HTTP
-│   └── product.ts
-├── 📁 dto/             # Data Transfer Objects
-│   └── product/
-│       ├── create.ts
-│       ├── get.ts
-│       └── update.ts
-├── 📁 entities/        # Entidades de domínio
-│   └── product/
-│       └── product.entity.ts
-├── 📁 infra/          # Infraestrutura
-│   └── http/
-│       ├── server.ts
-│       └── middleware/
-│           └── validate.ts
-├── 📁 mappers/        # Mapeadores de dados
-│   └── Product.ts
-├── 📁 repositories/   # Repositórios de dados
-│   └── product/
-│       ├── prisma-product.repository.ts
-│       └── product.repository.ts
-├── 📁 routes/         # Definição de rotas
-│   └── product.ts
-├── 📁 use-cases/      # Casos de uso (regras de negócio)
-│   └── product/
-│       ├── create.ts
-│       ├── update.ts
-│       ├── delete.ts
-│       ├── get.ts
-│       └── list.ts
-└── 📁 utils/          # Utilitários
-    └── alphabet.ts
+├── 🧪 __test__/           # Testes unitários e de integração
+│   ├── repository/
+│   └── unit/
+├── ⚙️  config/            # Configurações (Prisma, etc.)
+├── 🔧 constants/          # Constantes da aplicação
+├── 🎮 controllers/        # Controladores HTTP
+├── 📄 dto/               # Data Transfer Objects
+├── 🏗️  entities/          # Entidades de domínio
+├── 🔧 infra/             # Camada de infraestrutura
+│   ├── http/
+│   └── prisma/
+├── 🔄 mappers/           # Mapeadores de dados
+├── 💾 repositories/      # Repositórios de dados
+├── 🎯 use-cases/         # Casos de uso (regras de negócio)
+└── 🛠️  utils/            # Utilitários
 ```
 
----
+### 🏗️ Arquitetura Clean Architecture
 
-## ⚠️ Tratamento de Erros
-
-| Status Code | Erro | Descrição |
-|-------------|------|-----------|
-| **409** | Conflict | SKU duplicado |
-| **404** | Not Found | Produto não encontrado |
-| **400** | Bad Request | Dados inválidos |
-| **500** | Internal Server Error | Erro interno do servidor |
-
----
-
-## 🤝 Contribuindo
-
-Contribuições são sempre bem-vindas! Para contribuir:
-
-1. Faça um Fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
----
-
-## 📝 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Esta API segue os princípios da Clean Architecture, garantindo:
+- **Separação de responsabilidades** clara entre as camadas
+- **Independência de frameworks** e bibliotecas externas
+- **Testabilidade** alta com injeção de dependências
+- **Manutenibilidade** e escalabilidade do código
 
 ---
 
@@ -245,5 +192,3 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Poke-bits)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/fabio-thompson)
-
----

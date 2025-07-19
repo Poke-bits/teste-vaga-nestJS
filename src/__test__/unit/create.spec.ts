@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConflictException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,6 +6,7 @@ import { CreateProductDto } from 'src/dto/product/create';
 import { ProductRepository } from 'src/repositories/product/product.repository';
 import { CreateProductUseCase } from 'src/use-cases/product/create';
 import { PRODUCT_REPOSITORY } from 'src/constants/token';
+import { ConflictException } from '@nestjs/common';
 
 const mockProduct: Product = {
   id: uuidv4(),
@@ -63,17 +63,17 @@ describe('CreateProductUseCase', () => {
     expect(mockProductRepository.create).toHaveBeenCalled();
   });
 
-  // it('should throw ConflictException if SKU already exists', async () => {
-  //   mockProductRepository.findBySku.mockResolvedValue(mockProduct); 
+  it('should throw ConflictException if SKU already exists', async () => {
+    mockProductRepository.findBySku.mockResolvedValue(mockProduct); 
 
-  //   const dto: CreateProductDto = {
-  //     name: 'Another Product',
-  //     price: 199.99,
-  //     sku: 'TEST-SKU',
-  //   };
+    const dto: CreateProductDto = {
+      name: 'Another Product',
+      price: 199.99,
+      sku: 'TEST-SKU',
+    };
 
-  //   await expect(useCase.execute(dto)).rejects.toThrow(ConflictException);
-  //   expect(mockProductRepository.findBySku).toHaveBeenCalledWith(dto.sku);
-  //   expect(mockProductRepository.create).not.toHaveBeenCalled();
-  // });
+    await expect(useCase.execute(dto)).rejects.toThrow(ConflictException);
+    expect(mockProductRepository.findBySku).toHaveBeenCalledWith(dto.sku);
+    expect(mockProductRepository.create).not.toHaveBeenCalled();
+  });
 });

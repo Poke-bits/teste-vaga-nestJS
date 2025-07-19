@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException, ConflictException } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
-
 import { UpdateProductUseCase } from 'src/use-cases/product/update';
 import { ProductRepository } from 'src/repositories/product/product.repository';
 import { UpdateProductDto } from 'src/dto/product/update';

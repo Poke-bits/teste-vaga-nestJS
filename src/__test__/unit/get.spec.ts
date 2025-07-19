@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
-
 import { ProductRepository } from 'src/repositories/product/product.repository';
 import { GetProductUseCase } from 'src/use-cases/product/get';
 import { ProductOutputGetDto } from 'src/dto/product/get';

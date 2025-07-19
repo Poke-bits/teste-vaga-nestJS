@@ -1,12 +1,15 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, Inject } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { UpdateProductDto } from '../../dto/product/update';
 import { ProductEntity } from '../../entities/product/product.entity';
 import { ProductRepository } from '../../repositories/product/product.repository';
+import { PRODUCT_REPOSITORY } from 'src/constants/token';
 
 @Injectable()
 export class UpdateProductUseCase {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(
+    @Inject(PRODUCT_REPOSITORY)
+    private readonly productRepository: ProductRepository) {}
 
   async execute(id: string, data: UpdateProductDto): Promise<Product> {
     const productExists = await this.productRepository.findById(id);

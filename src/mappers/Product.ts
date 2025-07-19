@@ -1,6 +1,6 @@
 import { Product } from '@prisma/client';
-import { ProductOutputGetDto } from '../../src/dto/product/get';
-import { firstMissingAlphabetLetter } from '../../src/utils/alphabet';
+import { ProductOutputGetDto } from 'src/dto/product/get';
+import { firstMissingAlphabetLetter } from 'src/utils/alphabet';
 
 
 export function toProductResponse(product: Product): ProductOutputGetDto {

@@ -2,14 +2,15 @@
   "name": "teste-vaga-nest",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "main.ts",
   "scripts": {
-    "start": "npm run db:start && npx prisma migrate dev --name init && npx prisma generate && ts-node src/infra/http/server.ts",
-    "build": "tsc",
+    "start": "npm run db:start && npx prisma migrate dev --name init && npx prisma generate && npx nest start",
+    "start:dev": "npx nest start --watch",
+    "build": "npx nest build",
     "db:start": "docker-compose up -d",
     "db:stop": "docker-compose down",
     "db:restart": "npm run db:stop && npm run db:start",
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "npx prisma generate",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -32,6 +33,7 @@
     "zod": "^4.0.5"
   },
   "devDependencies": {
+    "@nestjs/cli": "^11.0.7",
     "@nestjs/testing": "^11.1.5",
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
