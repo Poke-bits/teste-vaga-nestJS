@@ -9,8 +9,6 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  UsePipes,
-  ValidationPipe,
   Logger,
 } from '@nestjs/common';
 import { CreateProductUseCase } from '../use-cases/product/create';

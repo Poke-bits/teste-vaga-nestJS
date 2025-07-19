@@ -29,7 +29,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else if (exception instanceof HttpException) {
       status = exception.getStatus();
       const exceptionResponse = exception.getResponse();
-      console.log(exceptionResponse, 'SEXOOOOOOOOOOOOOO');
       if (typeof exceptionResponse === 'string') {
         message = exceptionResponse;
       } else if (
